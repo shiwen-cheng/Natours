@@ -1,0 +1,69 @@
+.header {
+  height: 85vh; // 响应式
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/hero-small.jpg); // 先指定的图像会更接近用户
+
+  background-size: cover; // 缩放背景图片以完全覆盖背景区，可能背景图片部分看不见
+  background-position: top; // 图片上部保持不变，当窗口变化时，下部被裁剪
+
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    // 顺时针，左上角顶点是 0 0
+    height: 95vh;
+
+    // clip-path: polygon(50% 0, 100% 100%, 0 100%); // 三角形
+  }
+
+  @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+    only screen and (min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    only screen and (min-width: 125em) {
+    // 如果分辨率更高(且屏幕宽度大于 600px)，就用像素更多的 bgi
+    // 192dpi  --> 2x
+    // dpi: dots per inch
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8)
+      ),
+      url(../img/hero.jpg);
+  }
+
+  @include respond(phone) {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 85vh,
+      0 100%
+    ); // 顺时针，左上角顶点是 0 0
+  }
+
+  position: relative; // 父容器 relative
+
+  &__logo-box {
+    left: 4rem;
+    position: absolute;
+    top: 4rem;
+  }
+
+  &__logo {
+    height: 3.5rem;
+  }
+
+  &__text-box {
+    left: 50%; // 相对于父元素
+    position: absolute;
+    text-align: center; // for block 中 inline ele 的对齐
+    top: 40%; // 相对于父元素
+    transform: translate(-50%, -50%); // 相对于自己,x,y
+    //  因为原点在元素左上角，所以还要移动一下
+  }
+}
+
+// .logo:hover {
+//   animation: moveInRight 3s ease-out;
+// }

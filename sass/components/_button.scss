@@ -1,0 +1,104 @@
+.btn {
+  &,
+  &:link,
+  &:visited {
+    border-radius: 10rem; // 放一个很大的数都可以出现按钮的这个效果
+    display: inline-block;
+    font-size: $default-font-size;
+    padding: 1.5rem 4rem;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s; // 简单动画
+
+    // change for button el
+    border: 0;
+    cursor: pointer;
+  }
+
+  &:hover {
+    // 相对于初始 link 状态
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+    }
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    // 被点击瞬间，相对于初始 link 状态
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2); // 更小的阴影
+  }
+
+  &::after {
+    // like a child of after
+    display: inline-block; // 必有
+    content: ""; // 必有
+
+    width: 100%;
+    height: 100%;
+    border-radius: 10rem;
+
+    // 使其和原元素完全重合
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+
+    transition: all 0.4s;
+  }
+
+  &--white {
+    background-color: $color-white;
+    color: $color-grey-dark;
+
+    &::after {
+      background-color: $color-white;
+    }
+  }
+
+  &--green {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &::after {
+      background-color: $color-primary;
+    }
+  }
+
+  &--animated {
+    animation: moveInBottom 0.5s ease-out 0.75s;
+    animation-fill-mode: backwards; // 动画将在应用于目标时立即应用第一个关键帧中定义的值
+  }
+}
+
+.btn-text {
+  &:link,
+  &:visited {
+    border-bottom: 1px solid $color-primary;
+    color: $color-primary;
+    display: inline-block;
+    font-size: $default-font-size;
+    padding: 3px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.15);
+    color: $color-white;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
+    transform: translateY(0);
+  }
+}

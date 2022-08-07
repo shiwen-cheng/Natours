@@ -1,0 +1,161 @@
+// 这是十分具体针对该 home 网页的
+
+.section-about {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0;
+  //   padding: 25rem 15rem;
+  margin-top: -20vh; // 往上移动
+
+  @include respond(tab-port) {
+    padding: 20rem 0;
+  }
+}
+
+.section-features {
+  padding: 20rem 0;
+  margin-top: -10rem; // 往上移动
+
+  //   2 bgi
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/nat-4-small.jpg);
+
+  @media (min-resolution: 192dpi) and (min-width: 37.5em),
+    (min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    (min-width: 125em) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8)
+      ),
+      url(../img/nat-4.jpg);
+  }
+
+  background-size: cover;
+
+  //   只倾斜背景，不倾斜其中所有内容
+  transform: skewY(-7deg);
+
+  @include respond(tab-port) {
+    padding: 10rem 0;
+  }
+
+  & > * {
+    //   所有的直接 子元素
+    transform: skewY(7deg);
+  }
+}
+
+.section-tours {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0 15rem;
+  margin-top: -10rem; // 往上移动
+
+  @include respond(tab-port) {
+    padding: 20rem 0 10rem;
+  }
+}
+
+.section-stories {
+  padding: 15rem 0;
+  position: relative;
+
+  @include respond(tab-port) {
+    padding: 10rem 0;
+  }
+}
+
+.section-book {
+  background-image: linear-gradient(
+    to right bottom,
+    $color-primary-light,
+    $color-primary-dark
+  );
+  padding: 15rem 0;
+
+  @include respond(tab-port) {
+    padding: 10rem 0;
+  }
+}
+
+.book {
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2); // 因为 section-book 的背景图片较暗，所以 shadow 透明度要较大一点
+  background-size: cover; // 100% -- 100% w, 只是宽度占满，跟 cover 不太一样
+
+  // 这里可以替代 clip-path
+  background-image: linear-gradient(
+      105deg,
+      rgba($color-white, 0.9) 0%,
+      rgba($color-white, 0.9) 50%,
+      transparent 50%
+    ),
+    url(../img/nat-10-small.jpg);
+  // 在前面的，离人更近
+
+  @include respond(tab-land) {
+    background-image: linear-gradient(
+        105deg,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 65%,
+        transparent 65%
+      ),
+      url(../img/nat-10-small.jpg);
+  }
+
+  @include respond(tab-port) {
+    background-image: linear-gradient(
+        to right,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 100%
+      ),
+      url(../img/nat-10-small.jpg);
+  }
+
+  @media (min-resolution: 192dpi) and (min-width: 37.5em),
+    (min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    (min-width: 125em) {
+    background-image: linear-gradient(
+        105deg,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 50%,
+        transparent 50%
+      ),
+      url(../img/nat-10.jpg);
+
+    @include respond(tab-land) {
+      background-image: linear-gradient(
+          105deg,
+          rgba($color-white, 0.9) 0%,
+          rgba($color-white, 0.9) 65%,
+          transparent 65%
+        ),
+        url(../img/nat-10.jpg);
+    }
+
+    @include respond(tab-port) {
+      background-image: linear-gradient(
+          to right,
+          rgba($color-white, 0.9) 0%,
+          rgba($color-white, 0.9) 100%
+        ),
+        url(../img/nat-10.jpg);
+    }
+  }
+
+  &__form {
+    width: 50%;
+    padding: 6rem;
+
+    @include respond(tab-land) {
+      width: 65%;
+    }
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+  }
+}

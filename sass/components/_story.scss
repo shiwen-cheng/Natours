@@ -1,0 +1,92 @@
+.story {
+  margin: 0 auto; // block 中的 block 水平居中
+  width: 75%;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  background-color: rgba($color-white, 0.6);
+  border-radius: 3px;
+  padding: 6rem;
+  padding-left: 9rem;
+  font-size: $default-font-size;
+  transform: skewX(-12deg);
+  // 原本在这里，对所有子元素清除，但是 &__shape 已经应用了 transform， 不能再次应用，所以在每个子元素里做清除
+  // & > * {
+  //   transform: skewX(12deg);
+  // }
+
+  @include respond(tab-port) {
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem;
+  }
+
+  @include respond(phone) {
+    transform: skewX(0);
+  }
+
+  &__shape {
+    width: 15rem;
+    height: 15rem;
+    // background-color: orange;
+
+    // shape-outside 定义周围内容绕着该元素浮动的要求
+    // 用 shape-outside 要求：float 且已经设置 width & height
+    float: left;
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%); // 半径 at 圆心坐标
+
+    // 对于 float 的元素，添加距离，最好不用 margin ，而是用 translate
+    transform: translateX(-3rem) skewX(12deg);
+
+    position: relative;
+
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+      -webkit-clip-path: circle(50% at 50% 50%);
+      clip-path: circle(50% at 50% 50%);
+    }
+
+    @include respond(phone) {
+      transform: translateX(-3rem) skewX(0);
+    }
+  }
+
+  &__img {
+    height: 100%;
+    transform: translateX(-4rem) scale(1.4);
+    transition: all 0.5s;
+  }
+
+  &__text {
+    transform: skewX(12deg);
+
+    @include respond(phone) {
+      transform: skewX(0);
+    }
+  }
+
+  &__caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    opacity: 0;
+    transition: all 0.5s;
+    // backface-visibility: hidden; // 如果动画有抖动或奇怪的现象，就加这个；我这里没有
+
+    color: $color-white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    text-align: center; // caption 中的 text 要 center
+  }
+
+  &:hover &__img {
+    transform: translateX(-4rem) scale(1);
+    filter: blur(3px) brightness(80%);
+    // brightness 小于 100% -> darker；大于100% -> lighter
+    // FIXME: weird border right at figure, don't know why
+  }
+
+  &:hover &__caption {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}

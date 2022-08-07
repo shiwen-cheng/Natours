@@ -1,0 +1,266 @@
+.card {
+  /************** functionality **************/
+  // perspective 必须放在父元素
+  -moz-perspective: 150rem;
+  perspective: 150rem; // 给个大的值，小的值会很奇怪
+  position: relative;
+  height: 52rem; // 内部元素 position: absolute; 移出文档流，父元素高度塌陷（这里为了避免塌陷，将父元素和子元素的高度设为相同）
+
+  &__side {
+    backface-visibility: hidden;
+    border-radius: 3px;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+    height: 52rem;
+    left: 0;
+    overflow: hidden; // 解决圆角会被其中 img 覆盖的问题
+    position: absolute;
+    top: 0;
+    transition: all 0.8s ease; // .8
+    width: 100%;
+
+    &--front {
+      background-color: $color-white;
+    }
+
+    &--back {
+      transform: rotateY(-180deg); // 背面起始就是翻转的
+      &--1 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        );
+      }
+      &--2 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        );
+      }
+      &--3 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        );
+      }
+    }
+  }
+
+  &:hover &__side {
+    &--front {
+      transform: rotateY(180deg);
+    }
+    &--back {
+      transform: rotateY(-0);
+    }
+  }
+
+  /************** front side styling **************/
+  &__picture {
+    background-blend-mode: screen; // 指定 background-image 的融合方式
+    background-size: cover;
+    // -webkit 要写前面
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 85%,
+      0 100%
+    ); // 会使父的 overflow 无效？？？但我这里有效（如果无效，就重新设置一下 border-top-left(&right)-radius，反正只要达到了想要的效果就行）
+    height: 23rem;
+
+    &--1 {
+      // 可指定多个，先写的会 离人更近
+      background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        ),
+        url(../img/nat-5-tiny@1x.jpg); // 此路径是按照转换后的 css 文件需要用的路径来写
+
+      @media (min-resolution: 192dpi), (min-device-pixel-ratio: 2) {
+        background-image: linear-gradient(
+            to right bottom,
+            $color-secondary-light,
+            $color-secondary-dark
+          ),
+          url(../img/nat-5-tiny@2x.jpg);
+      }
+    }
+
+    &--2 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        ),
+        url(../img/nat-6-tiny@1x.jpg);
+
+      @media (min-resolution: 192dpi), (min-device-pixel-ratio: 2) {
+        background-image: linear-gradient(
+            to right bottom,
+            $color-primary-light,
+            $color-primary-dark
+          ),
+          url(../img/nat-6-tiny@2x.jpg);
+      }
+    }
+
+    &--3 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        ),
+        url(../img/nat-7-tiny@1x.jpg);
+
+      @media (min-resolution: 192dpi), (min-device-pixel-ratio: 2) {
+        background-image: linear-gradient(
+            to right bottom,
+            $color-tertiary-light,
+            $color-tertiary-dark
+          ),
+          url(../img/nat-7-tiny@2x.jpg);
+      }
+    }
+  }
+
+  &__heading {
+    color: $color-white;
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    text-align: right;
+    width: 75%;
+  }
+
+  &__heading-span {
+    padding: 1rem 1.5rem;
+
+    -webkit-box-decoration-break: clone; // 把应用在此选择器的所有属性，应用在其 break box 上
+    box-decoration-break: clone;
+
+    &--1 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light, 0.85),
+        rgba($color-secondary-dark, 0.85)
+      );
+    }
+    &--2 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.85),
+        rgba($color-primary-dark, 0.85)
+      );
+    }
+    &--3 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-tertiary-light, 0.85),
+        rgba($color-tertiary-dark, 0.85)
+      );
+    }
+  }
+
+  &__details {
+    padding: 3rem;
+
+    ul {
+      list-style: none;
+      width: 80%;
+      margin: 0 auto; // center a block in block
+
+      li {
+        font-size: 1.5rem;
+        padding: 1rem;
+        text-align: center;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $color-grey-light-2;
+        }
+      }
+    }
+  }
+
+  /************** back side styling **************/
+  &__cta {
+    // all for center
+    left: 50%; // of parent
+    position: absolute;
+    top: 50%; // of parent
+    transform: translate(-50%, -50%); // of self
+
+    width: 90%;
+
+    text-align: center; // for inline in block
+  }
+
+  &__price-box {
+    text-align: center;
+    color: $color-white;
+    margin-bottom: 8rem;
+  }
+
+  &__price-only {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__price-value {
+    font-size: 6rem;
+    font-weight: 100;
+  }
+
+  // @include respond(tab-port) {
+  @media only screen and (max-width: 56.25em), only screen and (hover: none) {
+    // (hover: none) 表示不支持 hover 的触控设备
+    // (hover: hover) 反之
+    height: auto;
+    border-radius: 3px;
+    background-color: $color-white;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+    &__side {
+      height: auto;
+      position: relative;
+      box-shadow: none;
+
+      &--back {
+        transform: rotateY(0);
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    &:hover &__side--front {
+      transform: rotateY(0);
+    }
+
+    &__details {
+      padding: 1rem 3rem;
+    }
+
+    /************** back side styling **************/
+    &__cta {
+      left: 0;
+      position: relative;
+      top: 0;
+      width: 100%;
+      padding: 7rem 4rem 4rem 4rem;
+      transform: translate(0);
+    }
+
+    &__price-box {
+      margin-bottom: 3rem;
+    }
+
+    &__price-value {
+      font-size: 4rem;
+    }
+  }
+}

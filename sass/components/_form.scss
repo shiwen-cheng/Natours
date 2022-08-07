@@ -1,0 +1,102 @@
+.form {
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    background-color: rgba($color-white, 0.5);
+    border-bottom: 3px solid transparent; // 因为 focus 后，border增加，会导致下面的input往下移动（所以这里先设置上）
+    border-radius: 2px;
+    border: none;
+    color: inherit;
+    display: block;
+    font-family: inherit; // input 默认不继承，这里强制继承
+    font-size: 1.5rem;
+    padding: 1.5rem 2rem; // form 和 btn 的左右 padding 总是比上下的大一点（好看）
+    width: 90%;
+    transition: all 0.3s;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+      border-bottom: 3px solid $color-primary;
+
+      &:invalid {
+        border-bottom: 3px solid $color-secondary-dark;
+      }
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-2;
+    }
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    display: block;
+    margin-top: 0.7rem;
+    transition: all 0.3s;
+  }
+
+  &__input:placeholder-shown + &__label {
+    // 紧挨着后面的兄弟
+    opacity: 0; // 跟普通元素一样，只是人眼看不到
+    visibility: hidden; // opacity 一样，但是不能监听事件
+    transform: translateY(-4rem);
+  }
+
+  &__radio-group {
+    width: 49%;
+    display: inline-block;
+
+    @include respond(tab-port) {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__radio-input {
+    display: none;
+  }
+
+  &__radio-label {
+    font-size: $default-font-size;
+    cursor: pointer;
+    position: relative;
+    padding-left: 4.5rem;
+  }
+
+  // 构建自己的 radio btn 元素
+  &__radio-btn {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 5px solid $color-primary;
+    position: absolute;
+    left: 0;
+    top: -0.4rem;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 50%;
+      @include absCenter;
+      background-color: $color-primary;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+  }
+
+  &__radio-input:checked + &__radio-label &__radio-btn::after {
+    opacity: 1;
+  }
+}
